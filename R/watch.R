@@ -16,11 +16,11 @@ watch_df <- function(
   watch_dir = "tower_snaps"
 ){
   
-  iso_time_stamp <- lubridate::format_ISO8601(lubridate::now(tzone = 'UTC'))
-  file_name <- glue::glue("{watch_name}_{lubridate::now(tzone = 'UTC')}.rda")
+
 
   # Watch dir df
-  files = list.files()
+  regex = glue::glue("^[:digit:]{4}-[:digit:]{2}-[:digit:]{2}T[:digit:]{6}_{watch_name}\\.rda$")
+  files = fs::dir_ls(watch_dir, pattern = regex)
 
   # Check if watch_name is in watch_dir
     # If not - alert and save a new one 
@@ -34,3 +34,23 @@ watch_df <- function(
       
 }
 
+#' @export
+list_watch_df_snapshots <- function(watch_name, watch_dir) {
+  watch_name <- fs::path_sanitize(watch_name)
+  regex = paste0(
+        "\\d{4}-\\d{2}-\\d{2}T\\d{6}_",
+        watch_name,
+        "\\.rda$"
+    )
+    
+  fs::dir_ls(watch_dir, regexp = regex, perl = TRUE) 
+}
+
+build_watch_filename <- function(watch_name) {
+  iso_time_stamp <- lubridate::format_ISO8601(
+    lubridate::now(tzone = 'UTC'), precision ='ymdhms'
+  )
+  
+  file_name <- glue::glue("{iso_time_stamp}_{watch_name}.rda")
+  fs::path_sanitize(file_name)
+}
