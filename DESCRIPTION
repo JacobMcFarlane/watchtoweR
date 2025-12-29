@@ -24,4 +24,9 @@ Imports:
     glue,
     lubridate,
     readr,
-    rlang
+    rlang,
+    tibble (>= 3.3.0),
+    withr (>= 3.0.2)
+Remotes:  
+    tidyverse/tibble,
+    r-lib/withr
