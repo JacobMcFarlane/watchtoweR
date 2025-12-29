@@ -8,4 +8,9 @@ test_that("Basic watch_df functionality works as expected", {
     regexp = "No match found for basic_df in"
   )
 
+  expect_true(
+    watch_df(basic_df,
+             watch_dir = watch_folder)
+  )
+
 })
