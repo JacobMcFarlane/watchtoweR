@@ -50,16 +50,22 @@ watch_df <- function(
     return(TRUE)
   }
 
+  snapshot_path <- dplyr::slice(
+    dplyr::arrange(matches, desc("modification_time")),
+    1 
+  )
 
-  # If in watch_dir
-  # load latest in watch dir
-    # specify columns 
-  # Is the same?
-    # if so, exit and alert true 
+  snapshot_df <- readr::read_rda(dplyr::pull(snapshot_path, "modification_time"))
+
+  df <- dplyr::arrange(df, everthing())
+  snapshot_df <- dplyr::arrange(df, everything())
+
+  are_both_equal <- all.equal(df, is_same)
   
-  FALSE
+  return(are_both_equal)
       
 }
+
 
 #' @export
 list_watch_df_snapshots <- function(watch_name, watch_dir) {
