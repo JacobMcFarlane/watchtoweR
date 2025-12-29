@@ -55,12 +55,12 @@ watch_df <- function(
     1 
   )
 
-  snapshot_df <- readr::read_rds(dplyr::pull(snapshot_path, "modification_time"))
+  snapshot_df <- readr::read_rds(dplyr::pull(snapshot_path, "path"))
 
-  df <- dplyr::arrange(df, everthing())
-  snapshot_df <- dplyr::arrange(df, everything())
+  df <- dplyr::arrange(df, dplyr::everything())
+  snapshot_df <- dplyr::arrange(df, dplyr::everything())
 
-  are_both_equal <- all.equal(df, is_same)
+  are_both_equal <- all.equal(df, snapshot_df)
   
   return(are_both_equal)
       
@@ -77,11 +77,6 @@ list_watch_df_snapshots <- function(watch_name, watch_dir) {
     )
     
   fs::dir_info(watch_dir, regexp = regex, perl = TRUE) 
-}
-
-#' @export
-load_latest_watch_df_snapshot <- function(watch_name, watch_dir) {
-
 }
 
 build_watch_filename <- function(watch_name) {
