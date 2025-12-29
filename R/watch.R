@@ -57,8 +57,8 @@ watch_df <- function(
 
   snapshot_df <- readr::read_rds(dplyr::pull(snapshot_path, "path"))
 
-  df <- dplyr::arrange(df, dplyr::everything())
-  snapshot_df <- dplyr::arrange(df, dplyr::everything())
+  df <- dplyr::arrange(df, dplyr::across(dplyr::everything()))
+  snapshot_df <- dplyr::arrange(df, dplyr::across(dplyr::everything()))
 
   are_both_equal <- all.equal(df, snapshot_df)
   
