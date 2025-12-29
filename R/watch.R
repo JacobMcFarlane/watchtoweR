@@ -55,7 +55,7 @@ watch_df <- function(
     1 
   )
 
-  snapshot_df <- readr::read_rda(dplyr::pull(snapshot_path, "modification_time"))
+  snapshot_df <- readr::read_rds(dplyr::pull(snapshot_path, "modification_time"))
 
   df <- dplyr::arrange(df, everthing())
   snapshot_df <- dplyr::arrange(df, everything())
@@ -73,7 +73,7 @@ list_watch_df_snapshots <- function(watch_name, watch_dir) {
   regex = paste0(
         "\\d{4}-\\d{2}-\\d{2}T\\d{6}_",
         watch_name,
-        "\\.rda$"
+        "\\.rds$"
     )
     
   fs::dir_info(watch_dir, regexp = regex, perl = TRUE) 
@@ -89,6 +89,6 @@ build_watch_filename <- function(watch_name) {
     lubridate::now(tzone = 'UTC'), precision ='ymdhms'
   )
   
-  file_name <- glue::glue("{iso_time_stamp}_{watch_name}.rda")
+  file_name <- glue::glue("{iso_time_stamp}_{watch_name}.rds")
   fs::path_sanitize(file_name)
 }
