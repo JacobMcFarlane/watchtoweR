@@ -6,6 +6,7 @@
 #' @param df object 
 #' @param watch_name identifier of object name to check on. Must be a valid filename.
 #' @param watch_dir  directory to look for snapshot
+#' @param if_diff desired behaviour if dataframes are not the same
 #'
 #' @returns bool true or false
 #'
@@ -13,7 +14,8 @@
 watch_df <- function(
   df, 
   watch_name = NULL,
-  watch_dir = "tower_snaps"
+  watch_dir = "tower_snaps",
+  if_diff = c("error", "warn")
 ){
   
   if (is.null(watch_name)) {
@@ -23,7 +25,7 @@ watch_df <- function(
 
   if (!fs::dir_exists(watch_dir)) {
     if (rlang::is_interactive()) {
-      res <- menu(
+      res <- utils::menu(
         c("Yes", "No"),
         title="Passed watch dir does not exist, do you want to create it?"
       )
@@ -51,7 +53,7 @@ watch_df <- function(
   }
 
   snapshot_path <- dplyr::slice(
-    dplyr::arrange(matches, desc("modification_time")),
+    dplyr::arrange(matches, dplyr::desc("modification_time")),
     1 
   )
 
@@ -86,4 +88,11 @@ build_watch_filename <- function(watch_name) {
   
   file_name <- glue::glue("{iso_time_stamp}_{watch_name}.rds")
   fs::path_sanitize(file_name)
+}
+
+reset_watch_snaphsots <- function(watch_name, watch_dir, verbpose = TRUE){
+
+  df_snapshots <- list_watch_df_snapshots(watch_name, watch_dir) 
+  df_snapshots_filepaths <- dplyr::pull(df_snapshots, "path")
+  fs::file_delete(df_snapshots_filepaths)
 }
