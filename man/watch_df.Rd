@@ -4,7 +4,12 @@
 \alias{watch_df}
 \title{Quick and dirty snapshot testing for a dataframe}
 \usage{
-watch_df(df, watch_name, watch_dir = "tower_snaps")
+watch_df(
+  df,
+  watch_name = NULL,
+  watch_dir = "tower_snaps",
+  if_diff = c("error", "warn")
+)
 }
 \arguments{
 \item{df}{object}
@@ -12,6 +17,8 @@ watch_df(df, watch_name, watch_dir = "tower_snaps")
 \item{watch_name}{identifier of object name to check on. Must be a valid filename.}
 
 \item{watch_dir}{directory to look for snapshot}
+
+\item{if_diff}{desired behaviour if dataframes are not the same}
 }
 \value{
 bool true or false

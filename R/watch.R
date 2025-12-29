@@ -90,6 +90,7 @@ build_watch_filename <- function(watch_name) {
   fs::path_sanitize(file_name)
 }
 
+#' @export
 reset_watch_snaphsots <- function(watch_name, watch_dir, verbpose = TRUE){
 
   df_snapshots <- list_watch_df_snapshots(watch_name, watch_dir) 
