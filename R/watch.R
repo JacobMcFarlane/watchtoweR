@@ -41,23 +41,23 @@ watch_df <- function(
 
   matches <- list_watch_df_snapshots(watch_name, watch_dir)
 
-  if (length(matches) == 0) {
+  if (nrow(matches) == 0) {
     cli::cli_alert("No match found for {watch_name} in {watch_dir}, creating new snapshot")
     readr::write_rds(
        x = df,
        fs::path_join(c(watch_dir, build_watch_filename(watch_name)))
     )
+    return(TRUE)
   }
 
-  # Check if watch_name is in watch_dir
-    # If not - alert and save a new one 
-      # Include git info, branch and config
-      # hash of relevant files?
-    # If in watch_dir
-      # load latest in watch dir
-        # specify columns 
-      # Is the same?
-        # if so, exit and alert true 
+
+  # If in watch_dir
+  # load latest in watch dir
+    # specify columns 
+  # Is the same?
+    # if so, exit and alert true 
+  
+  FALSE
       
 }
 
@@ -70,7 +70,12 @@ list_watch_df_snapshots <- function(watch_name, watch_dir) {
         "\\.rda$"
     )
     
-  fs::dir_ls(watch_dir, regexp = regex, perl = TRUE) 
+  fs::dir_info(watch_dir, regexp = regex, perl = TRUE) 
+}
+
+#' @export
+load_latest_watch_df_snapshot <- function(watch_name, watch_dir) {
+
 }
 
 build_watch_filename <- function(watch_name) {
