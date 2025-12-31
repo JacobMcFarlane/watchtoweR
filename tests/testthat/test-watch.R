@@ -13,4 +13,34 @@ test_that("Basic watch_df functionality works as expected", {
              watch_dir = watch_folder)
   )
 
+  diff_df <- dplyr::mutate(basic_df, numeric_col = numeric_col + 1) 
+
+  expect_false(
+    watch_df(
+      diff_df,
+      watch_name = "basic_df",
+      watch_dir = watch_folder,
+      if_diff = "silent"
+    )
+  )
+
+  expect_error(
+    watch_df(
+      diff_df,
+      watch_name = "basic_df",
+      watch_dir = watch_folder,
+      if_diff = "error"
+    )
+  )
+
+  expect_warning(
+    watch_df(
+      diff_df,
+      watch_name = "basic_df",
+      watch_dir = watch_folder,
+      if_diff = "warn"
+    )
+  )
+  
+
 })

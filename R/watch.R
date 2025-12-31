@@ -60,19 +60,19 @@ watch_df <- function(
   snapshot_df <- readr::read_rds(dplyr::pull(snapshot_path, "path"))
 
   df <- dplyr::arrange(df, dplyr::across(dplyr::everything()))
-  snapshot_df <- dplyr::arrange(df, dplyr::across(dplyr::everything()))
+  snapshot_df <- dplyr::arrange(snapshot_df, dplyr::across(dplyr::everything()))
 
-  are_both_equal <- all.equal(df, snapshot_df)
+  are_both_equal <- isTRUE(all.equal(df, snapshot_df))
 
   msg <- c("input is not equal to snapshot")
 
-  if (if_diff == "error") {
+  if (if_diff == "error" & !are_both_equal) {
     cli::cli_abort(
       msg
     )
   } 
 
-  if (if_diff == "warn") {
+  if (if_diff == "warn" & !are_both_equal) {
     cli::cli_warn(
       msg
     )
