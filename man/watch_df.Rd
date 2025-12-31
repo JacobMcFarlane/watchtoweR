@@ -8,22 +8,22 @@ watch_df(
   df,
   watch_name = NULL,
   watch_dir = "tower_snaps",
-  if_diff = c("error", "warn")
+  if_diff = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{df}{object}
+\item{df}{dataframe to save a snapshot of.}
 
 \item{watch_name}{identifier of object name to check on. Must be a valid filename.}
 
-\item{watch_dir}{directory to look for snapshot}
+\item{watch_dir}{directory to look for snapshot.}
 
-\item{if_diff}{desired behaviour if dataframes are not the same}
+\item{if_diff}{desired behaviour if dataframes are not the same.}
 }
 \value{
 bool true or false
 }
 \description{
 Checks the watch_dir for the passed watch name and comapres it against the df or saves a new 
-snapshot if one is not available
+snapshot if one is not available.
 }

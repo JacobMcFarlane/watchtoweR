@@ -1,12 +1,12 @@
 #' Quick and dirty snapshot testing for a dataframe
 #' 
 #' Checks the watch_dir for the passed watch name and comapres it against the df or saves a new 
-#' snapshot if one is not available
+#' snapshot if one is not available.
 #'
-#' @param df object 
+#' @param df dataframe to save a snapshot of.
 #' @param watch_name identifier of object name to check on. Must be a valid filename.
-#' @param watch_dir  directory to look for snapshot
-#' @param if_diff desired behaviour if dataframes are not the same
+#' @param watch_dir  directory to look for snapshot.
+#' @param if_diff desired behaviour if dataframes are not the same.
 #'
 #' @returns bool true or false
 #'
@@ -15,9 +15,9 @@ watch_df <- function(
   df, 
   watch_name = NULL,
   watch_dir = "tower_snaps",
-  if_diff = c("error", "warn")
+  if_diff = c("error", "warn", "silent")
 ){
-  
+  if_diff <- rlang::arg_match(if_diff)
   if (is.null(watch_name)) {
     watch_name <- rlang::as_name(rlang::enquo(df))
     cli::cli_alert("No watch name provided, using {watch_name}")
@@ -63,12 +63,32 @@ watch_df <- function(
   snapshot_df <- dplyr::arrange(df, dplyr::across(dplyr::everything()))
 
   are_both_equal <- all.equal(df, snapshot_df)
+
+  msg <- c("input is not equal to snapshot")
+
+  if (if_diff == "error") {
+    cli::cli_abort(
+      msg
+    )
+  } 
+
+  if (if_diff == "warn") {
+    cli::cli_warn(
+      msg
+    )
+  } 
   
   return(are_both_equal)
       
 }
 
 
+#' Check available snapshots
+#' 
+#' @inheritParams watch_df
+#'
+#' @returns a df with information about saved snapshots for the watched item
+#'
 #' @export
 list_watch_df_snapshots <- function(watch_name, watch_dir) {
   watch_name <- fs::path_sanitize(watch_name)
@@ -90,8 +110,12 @@ build_watch_filename <- function(watch_name) {
   fs::path_sanitize(file_name)
 }
 
+#' Delete all existing snapshots
+#'
+#' @inheritParams watch_df
+#'
 #' @export
-reset_watch_snaphsots <- function(watch_name, watch_dir, verbpose = TRUE){
+reset_watch_snaphsots <- function(watch_name, watch_dir){
 
   df_snapshots <- list_watch_df_snapshots(watch_name, watch_dir) 
   df_snapshots_filepaths <- dplyr::pull(df_snapshots, "path")
