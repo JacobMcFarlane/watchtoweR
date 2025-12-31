@@ -62,6 +62,9 @@ watch_df <- function(
   df <- dplyr::arrange(df, dplyr::across(dplyr::everything()))
   snapshot_df <- dplyr::arrange(snapshot_df, dplyr::across(dplyr::everything()))
 
+  df <- dplyr::select(df, order(colnames(df)))
+  snapshot_df <- dplyr::select(snapshot_df, order(colnames(snapshot_df)))
+
   are_both_equal <- isTRUE(all.equal(df, snapshot_df))
 
   msg <- c("input is not equal to snapshot")
