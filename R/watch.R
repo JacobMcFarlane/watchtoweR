@@ -3,12 +3,12 @@
 #' Checks the watch_dir for the passed watch name and comapres it against the df or saves a new 
 #' snapshot if one is not available.
 #'
-#' @param df dataframe to save a snapshot of.
-#' @param watch_name identifier of object name to check on. Must be a valid filename.
-#' @param watch_dir  directory to look for snapshot.
-#' @param if_diff desired behaviour if dataframes are not the same.
+#' @param df Dataframe to save a snapshot of.
+#' @param watch_name Identifier of object name to check on. Must be a valid filename.
+#' @param watch_dir  Directory to look for snapshot.
+#' @param if_diff Desired behaviour if dataframes are not the same.
 #'
-#' @returns bool true or false
+#' @returns boolean, true if no snapshot or snapshot is identical.
 #'
 #' @export 
 watch_df <- function(
@@ -90,7 +90,7 @@ watch_df <- function(
 #' 
 #' @inheritParams watch_df
 #'
-#' @returns a df with information about saved snapshots for the watched item
+#' @returns a df with information about saved snapshots for the watched item.
 #'
 #' @export
 list_watch_df_snapshots <- function(watch_name, watch_dir) {
@@ -113,7 +113,7 @@ build_watch_filename <- function(watch_name) {
   fs::path_sanitize(file_name)
 }
 
-#' Delete all existing snapshots
+#' Delete all existing snapshots for a watched object.
 #'
 #' @inheritParams watch_df
 #'

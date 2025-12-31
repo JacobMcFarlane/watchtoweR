@@ -12,16 +12,16 @@ watch_df(
 )
 }
 \arguments{
-\item{df}{dataframe to save a snapshot of.}
+\item{df}{Dataframe to save a snapshot of.}
 
-\item{watch_name}{identifier of object name to check on. Must be a valid filename.}
+\item{watch_name}{Identifier of object name to check on. Must be a valid filename.}
 
-\item{watch_dir}{directory to look for snapshot.}
+\item{watch_dir}{Directory to look for snapshot.}
 
-\item{if_diff}{desired behaviour if dataframes are not the same.}
+\item{if_diff}{Desired behaviour if dataframes are not the same.}
 }
 \value{
-bool true or false
+boolean, true if no snapshot or snapshot is identical.
 }
 \description{
 Checks the watch_dir for the passed watch name and comapres it against the df or saves a new 

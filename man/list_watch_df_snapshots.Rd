@@ -7,12 +7,12 @@
 list_watch_df_snapshots(watch_name, watch_dir)
 }
 \arguments{
-\item{watch_name}{identifier of object name to check on. Must be a valid filename.}
+\item{watch_name}{Identifier of object name to check on. Must be a valid filename.}
 
-\item{watch_dir}{directory to look for snapshot.}
+\item{watch_dir}{Directory to look for snapshot.}
 }
 \value{
-a df with information about saved snapshots for the watched item
+a df with information about saved snapshots for the watched item.
 }
 \description{
 Check available snapshots
