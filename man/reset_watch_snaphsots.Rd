@@ -2,7 +2,7 @@
 % Please edit documentation in R/watch.R
 \name{reset_watch_snaphsots}
 \alias{reset_watch_snaphsots}
-\title{Delete all existing snapshots for a watched object.}
+\title{Delete all existing snapshots for a watched object}
 \usage{
 reset_watch_snaphsots(watch_name, watch_dir)
 }
@@ -12,5 +12,5 @@ reset_watch_snaphsots(watch_name, watch_dir)
 \item{watch_dir}{Directory to look for snapshot.}
 }
 \description{
-Delete all existing snapshots for a watched object.
+Resets the saved snapshot so another one may be saved.
 }
