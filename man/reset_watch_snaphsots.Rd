@@ -8,9 +8,9 @@ This function is useful for reseting the snapshot when an intended change is mad
 reset_watch_snaphsots(watch_name, watch_dir)
 }
 \arguments{
-\item{watch_name}{Identifier of object name to check on. Must be a valid filename.}
+\item{watch_name}{Slug to identify snapshot. If NULL, the name of the object is used.}
 
-\item{watch_dir}{Directory to look for snapshot.}
+\item{watch_dir}{Snapshot directory.}
 }
 \description{
 Delete all existing snapshots for a watched object

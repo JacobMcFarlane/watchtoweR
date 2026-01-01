@@ -2,21 +2,21 @@
 % Please edit documentation in R/watch.R
 \name{watch_df}
 \alias{watch_df}
-\title{Quick and dirty snapshot testing for a dataframe}
+\title{Create a snapshot of a dataframe or check against an existing snapshot}
 \usage{
 watch_df(
   df,
   watch_name = NULL,
-  watch_dir = "tower_snaps",
+  watch_dir = ".tower_snaps",
   if_diff = c("error", "warn", "silent")
 )
 }
 \arguments{
-\item{df}{Dataframe to save a snapshot of.}
+\item{df}{Dataframe to snapshot test.}
 
-\item{watch_name}{Identifier of object name to check on. Must be a valid filename.}
+\item{watch_name}{Slug to identify snapshot. If NULL, the name of the object is used.}
 
-\item{watch_dir}{Directory to look for snapshot.}
+\item{watch_dir}{Snapshot directory.}
 
 \item{if_diff}{Desired behaviour if dataframes are not the same.}
 }
@@ -24,8 +24,20 @@ watch_df(
 boolean, true if no snapshot or snapshot is identical.
 }
 \description{
-First, this function checks if a snapshot exists for the dataframe passed.
-If no snapshot exists, it creates a snapshot in watch_dir.
-If a snapshot does exists, it compares the snapshot to the passed dataframe using all.equal
-with the caveat that it ignores differences in row or column order.
+If a snapshot exists with the passed watch_name in watch_dir, this function compares the snapshot to the passed dataframe using all.equal
+after standardizing row and column order.
+}
+\examples{
+my_df <- data.frame("numeric_col" = c(1, 2))
+# Fancy code you want to refactor that does stuff to my_df goes here
+# Saves first time it's run, returns true afterwards
+watch_df(basic_df,
+         watch_dir = watch_folder)
+diff_df <- dplyr::mutate(basic_df, numeric_col = numeric_col + 1) 
+# Returns false and throws a warning
+ watch_df(
+   diff_df,
+   watch_name = "basic_df",
+   if_diff = "warn"
+ )
 }

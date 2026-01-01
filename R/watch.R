@@ -9,7 +9,7 @@
 #' @param if_diff Desired behaviour if dataframes are not the same.
 #'
 #' @returns boolean, true if no snapshot or snapshot is identical.
-#' @example
+#' @examples
 #' my_df <- data.frame("numeric_col" = c(1, 2))
 #' # Fancy code you want to refactor that does stuff to my_df goes here
 #' # Saves first time it's run, returns true afterwards
