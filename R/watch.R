@@ -1,7 +1,9 @@
 #' Quick and dirty snapshot testing for a dataframe
 #' 
-#' Checks the watch_dir for the passed watch name and comapres it against the df or saves a new 
-#' snapshot if one is not available.
+#' First, this function checks if a snapshot exists for the dataframe passed.
+#' If no snapshot exists, it creates a snapshot in watch_dir.
+#' If a snapshot does exists, it compares the snapshot to the passed dataframe using all.equal
+#' with the caveat that it ignores differences in row or column order.
 #'
 #' @param df Dataframe to save a snapshot of.
 #' @param watch_name Identifier of object name to check on. Must be a valid filename.
@@ -87,11 +89,8 @@ watch_df <- function(
 
 
 #' Check available snapshots
-#' 
 #' @inheritParams watch_df
-#'
 #' @returns a df with information about saved snapshots for the watched item.
-#'
 #' @export
 list_watch_df_snapshots <- function(watch_name, watch_dir) {
   watch_name <- fs::path_sanitize(watch_name)
@@ -113,10 +112,9 @@ build_watch_filename <- function(watch_name) {
   fs::path_sanitize(file_name)
 }
 
-#' Delete all existing snapshots for a watched object.
-#'
+#' Delete all existing snapshots for a watched object
+#' This function is useful for reseting the snapshot when an intended change is made.
 #' @inheritParams watch_df
-#'
 #' @export
 reset_watch_snaphsots <- function(watch_name, watch_dir){
 

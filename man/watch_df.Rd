@@ -24,6 +24,8 @@ watch_df(
 boolean, true if no snapshot or snapshot is identical.
 }
 \description{
-Checks the watch_dir for the passed watch name and comapres it against the df or saves a new 
-snapshot if one is not available.
+First, this function checks if a snapshot exists for the dataframe passed.
+If no snapshot exists, it creates a snapshot in watch_dir.
+If a snapshot does exists, it compares the snapshot to the passed dataframe using all.equal
+with the caveat that it ignores differences in row or column order.
 }

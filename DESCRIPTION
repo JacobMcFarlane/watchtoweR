@@ -1,6 +1,6 @@
 Package: watchtoweR
 Type: Package
-Title: Quick and dirty regression testing for dataframes.  
+Title: Quick and dirty regression testing for dataframes
 Version: 0.1.0
 Authors@R: c(
     person(
@@ -9,7 +9,7 @@ Authors@R: c(
       role = c("aut", "cre")
     )
   )
-Description: This file 
+Description: This package provides snapshot test functionality for informal testing while refactoring R code.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
