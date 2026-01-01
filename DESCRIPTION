@@ -9,7 +9,11 @@ Authors@R: c(
       role = c("aut", "cre", "cph")
     )
   )
-Description: This package provides file-based snapshot testing for R data frames, allowing you to detect differences in dataframes when refactoring code or making upstream changes. It automatically saves timestamped snapshots, compares new results against the most recent snapshot while ignoring row and column order, and lets you control how differences are handled.
+Description: 
+  This package provides file-based snapshot testing for R data frames, allowing you to detect
+  differences in dataframes when refactoring code or making upstream changes. It automatically
+  saves timestamped snapshots, compares new results against the most recent snapshot while
+  ignoring row and column order.
 LazyData: true
 Suggests: 
     testthat (>= 3.0.0),
@@ -25,3 +29,4 @@ Imports:
     lubridate,
     readr,
     rlang
+License: MIT + file LICENSE
