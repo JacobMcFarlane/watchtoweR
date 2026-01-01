@@ -10,11 +10,12 @@
 #'
 #' @returns boolean, true if no snapshot or snapshot is identical.
 #' @examples
+#' \dontrun{
 #' my_df <- data.frame("numeric_col" = c(1, 2))
 #' # Fancy code you want to refactor that does stuff to my_df goes here
 #' # Saves first time it's run, returns true afterwards
-#' watch_df(basic_df,
-#'          watch_dir = watch_folder)
+#' 
+#' watch_df(basic_df)
 #' diff_df <- dplyr::mutate(basic_df, numeric_col = numeric_col + 1) 
 #'# Returns false and throws a warning
 #'  watch_df(
@@ -22,6 +23,7 @@
 #'    watch_name = "basic_df",
 #'    if_diff = "warn"
 #'  )
+#' }
 #' @export 
 watch_df <- function(
   df, 
