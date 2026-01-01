@@ -1,17 +1,15 @@
 Package: watchtoweR
 Type: Package
-Title: Quick and dirty regression testing for dataframes
+Title: Snapshot Regression Testing for Data Frames
 Version: 0.1.0
 Authors@R: c(
     person(
       "Jacob", "McFarlane",
       email = "jacob@jakenow.net",
-      role = c("aut", "cre")
+      role = c("aut", "cre", "cph")
     )
   )
-Description: This package provides snapshot test functionality for informal testing while refactoring R code.
-License: MIT + file LICENSE
-Encoding: UTF-8
+Description: This package provides file-based snapshot testing for R data frames, allowing you to detect differences in dataframes when refactoring code or making upstream changes. It automatically saves timestamped snapshots, compares new results against the most recent snapshot while ignoring row and column order, and lets you control how differences are handled.
 LazyData: true
 Suggests: 
     testthat (>= 3.0.0),

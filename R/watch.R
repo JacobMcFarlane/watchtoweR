@@ -1,22 +1,32 @@
-#' Quick and dirty snapshot testing for a dataframe
+#' Create a snapshot of a dataframe or check against an existing snapshot
 #' 
-#' First, this function checks if a snapshot exists for the dataframe passed.
-#' If no snapshot exists, it creates a snapshot in watch_dir.
-#' If a snapshot does exists, it compares the snapshot to the passed dataframe using all.equal
-#' with the caveat that it ignores differences in row or column order.
+#' If a snapshot exists with the passed watch_name in watch_dir, this function compares the snapshot to the passed dataframe using all.equal
+#' after standardizing row and column order.
 #'
-#' @param df Dataframe to save a snapshot of.
-#' @param watch_name Identifier of object name to check on. Must be a valid filename.
-#' @param watch_dir  Directory to look for snapshot.
+#' @param df Dataframe to snapshot test.
+#' @param watch_name Slug to identify snapshot. If NULL, the name of the object is used.
+#' @param watch_dir  Snapshot directory.
 #' @param if_diff Desired behaviour if dataframes are not the same.
 #'
 #' @returns boolean, true if no snapshot or snapshot is identical.
-#'
+#' @example
+#' my_df <- data.frame("numeric_col" = c(1, 2))
+#' # Fancy code you want to refactor that does stuff to my_df goes here
+#' # Saves first time it's run, returns true afterwards
+#' watch_df(basic_df,
+#'          watch_dir = watch_folder)
+#' diff_df <- dplyr::mutate(basic_df, numeric_col = numeric_col + 1) 
+#'# Returns false and throws a warning
+#'  watch_df(
+#'    diff_df,
+#'    watch_name = "basic_df",
+#'    if_diff = "warn"
+#'  )
 #' @export 
 watch_df <- function(
   df, 
   watch_name = NULL,
-  watch_dir = "tower_snaps",
+  watch_dir = ".tower_snaps",
   if_diff = c("error", "warn", "silent")
 ){
   if_diff <- rlang::arg_match(if_diff)
@@ -29,7 +39,7 @@ watch_df <- function(
     if (rlang::is_interactive()) {
       res <- utils::menu(
         c("Yes", "No"),
-        title="Passed watch dir does not exist, do you want to create it?"
+        title=glue::glue("Directory {watch_dir} does not exist, do you want to create it?")
       )
 
       if (res == 1) {
@@ -61,32 +71,37 @@ watch_df <- function(
 
   snapshot_df <- readr::read_rds(dplyr::pull(snapshot_path, "path"))
 
-  df <- dplyr::arrange(df, dplyr::across(dplyr::everything()))
-  snapshot_df <- dplyr::arrange(snapshot_df, dplyr::across(dplyr::everything()))
-
-  df <- dplyr::select(df, order(colnames(df)))
-  snapshot_df <- dplyr::select(snapshot_df, order(colnames(snapshot_df)))
+  df <- prep_df_for_comparison(df)
+  snapshot_df <- prep_df_for_comparison(snapshot_df)
 
   are_both_equal <- isTRUE(all.equal(df, snapshot_df))
 
-  msg <- c("input is not equal to snapshot")
+  if (!are_both_equal) {
+    msg <- c("input is not equal to snapshot")
 
-  if (if_diff == "error" & !are_both_equal) {
-    cli::cli_abort(
-      msg
-    )
-  } 
+      if (if_diff == "error") {
+        cli::cli_abort(
+          msg
+        )
+      } 
 
-  if (if_diff == "warn" & !are_both_equal) {
-    cli::cli_warn(
-      msg
-    )
-  } 
+      if (if_diff == "warn") {
+        cli::cli_warn(
+          msg
+        )
+      } 
+  }
   
-  return(are_both_equal)
+  are_both_equal
       
-}
+  }
 
+# Alphabetize columns, arrange rows based on all row values
+prep_df_for_comparison <- function(df){
+  df = dplyr::arrange(df, dplyr::across(dplyr::everything()))
+  df = dplyr::select(df, order(colnames(df)))
+  df
+}
 
 #' Check available snapshots
 #' @inheritParams watch_df
