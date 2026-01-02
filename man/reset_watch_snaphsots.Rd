@@ -16,3 +16,6 @@ reset_watch_snaphsots(watch_name, watch_dir)
 Delete all existing snapshots for a watched object
 This function is useful for reseting the snapshot when an intended change is made.
 }
+\examples{
+reset_watch_snaphsots(watch_name = "my_df", watch_dir = "watch_dir")
+}
