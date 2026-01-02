@@ -109,7 +109,9 @@ prep_df_for_comparison <- function(df){
 #' @inheritParams watch_df
 #' @returns a df with information about saved snapshots for the watched item.
 #' @examples
+#' \dontrun{
 #' list_watch_df_snapshots(watch_name = "my_df", watch_dir = "watch_dir")
+#' }
 #' @export
 list_watch_df_snapshots <- function(watch_name, watch_dir) {
   watch_name <- fs::path_sanitize(watch_name)
@@ -136,7 +138,9 @@ build_watch_filename <- function(watch_name) {
 #' @inheritParams watch_df
 #' @returns NULL
 #' @examples
+#' \dontrun{
 #' reset_watch_snaphsots(watch_name = "my_df", watch_dir = "watch_dir")
+#' }
 #' @export
 reset_watch_snaphsots <- function(watch_name, watch_dir){
 

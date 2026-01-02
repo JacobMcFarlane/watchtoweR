@@ -18,5 +18,7 @@ a df with information about saved snapshots for the watched item.
 Check available snapshots
 }
 \examples{
+\dontrun{
 list_watch_df_snapshots(watch_name = "my_df", watch_dir = "watch_dir")
+}
 }
