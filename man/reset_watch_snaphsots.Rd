@@ -5,7 +5,7 @@
 \title{Delete all existing snapshots for a watched object
 This function is useful for reseting the snapshot when an intended change is made.}
 \usage{
-reset_watch_snaphsots(watch_name, watch_dir)
+reset_watch_snaphsots(watch_name, watch_dir = ".tower_snaps")
 }
 \arguments{
 \item{watch_name}{Slug to identify snapshot. If NULL, the name of the object is used.}

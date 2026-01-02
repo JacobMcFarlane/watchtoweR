@@ -4,7 +4,7 @@
 \alias{list_watch_df_snapshots}
 \title{Check available snapshots}
 \usage{
-list_watch_df_snapshots(watch_name, watch_dir)
+list_watch_df_snapshots(watch_name, watch_dir = ".tower_snaps")
 }
 \arguments{
 \item{watch_name}{Slug to identify snapshot. If NULL, the name of the object is used.}
@@ -19,6 +19,6 @@ Check available snapshots
 }
 \examples{
 \dontrun{
-list_watch_df_snapshots(watch_name = "my_df", watch_dir = "watch_dir")
+list_watch_df_snapshots(watch_name = "my_df", watch_dir = ".tower_snaps")
 }
 }
