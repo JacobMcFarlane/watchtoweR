@@ -18,7 +18,8 @@ a df with information about saved snapshots for the watched item.
 Check available snapshots
 }
 \examples{
-\dontrun{
-list_watch_df_snapshots(watch_name = "my_df", watch_dir = ".tower_snaps")
-}
+watch_dir = tempdir()
+my_df <- data.frame("numeric_col" = c(1, 2))
+watch_df(my_df, watch_dir = watch_dir)
+list_watch_df_snapshots(watch_name = "my_df", watch_dir = watch_dir)
 }
