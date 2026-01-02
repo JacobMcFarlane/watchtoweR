@@ -30,3 +30,4 @@ Imports:
     readr,
     rlang
 License: MIT + file LICENSE
+Encoding: UTF-8
